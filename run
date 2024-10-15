@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 wayland_envs=`tr '\0' '\n' < /proc/$(pgrep --uid $(id --user) --newest sway)/environ | grep -E 'WAY|XDG_R' | xargs`
-if [[ -z $wayland_envs ]]; then
+if [ "$wayland_envs" = "" ]; then
 	exit 1
 else
-	export $wayland_envs
-	export LANG=en_US.UTF-8
-	exec foot --server
+	export $wayland_envs LANG=en_US.UTF-8
+   	foot --server
 fi
